@@ -1,3 +1,4 @@
+import 'package:build_with_bloc/presentation/components/prompts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +20,14 @@ class MyHomePage extends StatelessWidget {
             const Text(
               'You have pushed the button this many times:',
             ),
-            BlocBuilder<CounterCubit, CounterState>(
+            BlocConsumer<CounterCubit, CounterState>(
+              listener: (context, state) {
+                if (state.wasIncremented == true) {
+                  Prompts.showSnackBar(context, "Incremented!");
+                } else if (state.wasIncremented == false) {
+                  Prompts.showSnackBar(context, "Decremented!");
+                }
+              },
               builder: (context, state) {
                 return Text(
                   '${state.counter}',
